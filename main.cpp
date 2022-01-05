@@ -1,35 +1,64 @@
 #include<iostream>
 #include<string>
+#include <ctime>
+#include <iomanip>
+
 
 using namespace std ;
 
-void chooseGor_Per();
-void startGeorgian();
-void startPersian();
-
-int main()
+void startACalendar()
 {
-    chooseGor_Per() ;
+    //find the currunt time
+        time_t now = time(0);
+        tm *ltm = localtime(&now); // currunt time 
+
+        int month_1st_weekday = findTheFirstDayOfMonth() ;
+        
 }
 
-void chooseGor_Per()
+void printTheMontheTitle(tm* time)
 {
-    char a ;
-    cout << "for using georgian calendar type \"G\" \nand for using persian calendar type \"P\" (G/P) : " ;
-    cin >> a ;
-    if (a == 'G' || a == 'g'){ 
-        // start georgian calendar
+    cout << setfill('-') << setw(26) <<     ;
+    cout << setw(5) << monthDayName(time->tm_mon) << "  ,  " << 1900 + time->tm_year << endl;
+    cout << setfill('-') << setw(26) << endl;
+}
 
-    }else if (a == 'p' || a == 'P'){
-        // start persian calendar
-        
-    }else{
-        cout << "your input is wrong" ;
-        chooseGor_Per();
+string monthDayName(int month)
+{
+    switch (month)
+    {
+    case 0: return "January";
+    case 1: return "February";
+    case 2: return "March";
+    case 3: return "April";
+    case 4: return "May";
+    case 5: return "june";
+    case 6: return "july";
+    case 7: return "August";
+    case 8: return "September";
+    case 9: return "October";
+    case 10: return "November";
+    case 11: return "December";
     }
 }
 
-void startGeorgian()
+int findTheFirstDayOfMonth(tm *time)
 {
-    
+    return (time->tm_mday * -1)+1 % 7 ;
+} 
+
+class Calendar 
+{
+public:
+    Calendar()
+    {
+        startACalendar();
+                       
+    }
+}
+
+
+int main()
+{
+
 }
