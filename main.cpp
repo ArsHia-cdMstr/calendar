@@ -6,7 +6,46 @@
 
 using namespace std ;
 
-void startAGeoCalendar(bool isPersian )
+
+void startAGeoCalendar();
+
+void printDaysOfAMonth(tm*, int);
+
+int numberOfDays(int ,int);
+
+void printTheMonthTitle(tm*);
+
+string monthDayName(int);
+
+int findTheFirstDayOfMonth(tm*);
+
+class PerCalendar 
+{
+public:
+    PerCalendar()
+    {
+        startAPerCalendar();               
+    }
+};
+
+class GeoCalendar 
+{
+public:
+    GeoCalendar()
+    {
+        startAGeoCalendar();               
+    }
+};
+
+
+int main()
+{
+
+}
+
+
+
+void startAGeoCalendar()
 {
     //find the currunt time
     time_t now = time(0);
@@ -20,9 +59,21 @@ void startAGeoCalendar(bool isPersian )
 
 void printDaysOfAMonth(tm* time , int M1W)//uncomplete
 {
-    cout << setw((M1W*4)) ;
+    for (int i=0 ; i<M1W ; i++)
+        cout<< "    " ;
+    int days = numberOfDays( (time->tm_yday+1900) , time->tm_mon); // EX: March -> 31 days
+    int k = M1W; // to know when to jump to the next line in printing calendar
 
-    for (int i=0 ; i<)
+    for (int i=1 ; i<=days; i++ )
+    {
+        printf("%4d" , i) ;
+        if (k==6)
+        {
+            cout << "\n" ;
+            k=0 ;
+        }else
+            k++ ;
+    }
 }
 
 int numberOfDays(int year, int month)
@@ -50,10 +101,10 @@ int numberOfDays(int year, int month)
 
 void printTheMonthTitle(tm* time)
 {
-    cout << "--------------------------" << endl ;
-    cout << setw(5) << monthDayName(time->tm_mon) << "  ,  " << 1900 + time->tm_year << endl;
-    cout << "--------------------------" << endl ;
-    cout << "Su  Mo  Tu  We  Th  Fr  Sa" << endl ;
+    cout << "  --------------------------" << endl ;
+    cout << "       " << monthDayName(time->tm_mon) << "  ,  " << 1900 + time->tm_year << endl;
+    cout << "  --------------------------" << endl ;
+    cout << "  Su  Mo  Tu  We  Th  Fr  Sa" << endl ;
 }
 
 string monthDayName(int month)
@@ -79,27 +130,3 @@ int findTheFirstDayOfMonth(tm *time)
 {
     return ((time->tm_wday - ((time->tm_mday - 1) % 7) ) % 7);
 } 
-
-class PerCalendar 
-{
-public:
-    PerCalendar()
-    {
-        startAPerCalendar();               
-    }
-};
-
-class GeoCalendar 
-{
-public:
-    GeoCalendar()
-    {
-        startAGeoCalendar();               
-    }
-};
-
-
-int main()
-{
-
-}
