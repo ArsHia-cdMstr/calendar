@@ -50,9 +50,10 @@ int numberOfDays(int year, int month)
 
 void printTheMonthTitle(tm* time)
 {
-    cout << "--------------------------\n" ;
+    cout << "--------------------------" << endl ;
     cout << setw(5) << monthDayName(time->tm_mon) << "  ,  " << 1900 + time->tm_year << endl;
-    cout << "--------------------------\n" ;
+    cout << "--------------------------" << endl ;
+    cout << "Su  Mo  Tu  We  Th  Fr  Sa" << endl ;
 }
 
 string monthDayName(int month)
