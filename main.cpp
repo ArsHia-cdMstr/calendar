@@ -12,15 +12,16 @@ void startACalendar()
         time_t now = time(0);
         tm *ltm = localtime(&now); // currunt time 
 
-        int month_1st_weekday = findTheFirstDayOfMonth() ;
+        int month_1st_weekday = findTheFirstDayOfMonth( ltm ) ;
+        printTheMonthTitle( ltm ) ;
         
 }
 
-void printTheMontheTitle(tm* time)
+void printTheMonthTitle(tm* time)
 {
-    cout << setfill('-') << setw(26) <<     ;
+    cout << "--------------------------\n" ;
     cout << setw(5) << monthDayName(time->tm_mon) << "  ,  " << 1900 + time->tm_year << endl;
-    cout << setfill('-') << setw(26) << endl;
+    cout << "--------------------------\n" ;
 }
 
 string monthDayName(int month)
