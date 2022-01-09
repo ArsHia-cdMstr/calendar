@@ -19,20 +19,82 @@ class GeoCalendar
     // find the currunt time
     time_t now = time(0);
     tm *ltm = localtime(&now); // currunt time
+    int year = (ltm->tm_year+1900) ;
+    int month = ltm->tm_mon ;
+    int weekDay = ltm->tm_wday;
+    int monthDay = ltm->tm_mday;
 
-    // which day are we in to write a massage
-    int selector = ltm->tm_mday;
 
 
 public:
     GeoCalendar()
     {
-        int month_1st_weekday = findTheFirstDayOfMonth(ltm->tm_mday ,ltm->tm_wday);
-        int year = (ltm->tm_year+1900) ;
-        int month = ltm->tm_mon ;
+        startTheCalendar(year ,month ,monthDay ,weekDay);
+    }
+
+    void startTheCalendar(int year ,int month ,int monthDay ,int weekDay)
+    {
+        //print the calendar :
+        int month_1st_weekday = findTheFirstDayOfMonth(monthDay ,weekDay);
         printTheMonthTitle(year ,month);
         printDaysOfAMonth(year ,month ,month_1st_weekday);
+
+        next();
     }
+
+     void next()
+    {
+        
+        while (true)
+        {
+            
+            // choose the day that we want to put a note
+            cout << "note day : " << monthDay ;
+
+            string commond ;
+            cout << "\n (N) for next day :" << endl ;
+            cout << "\n (NM) for the next month :"<< endl;
+            cout << "\n (NY) fot next year : "<< endl;
+
+            cin >> commond ;
+
+            //next day
+            if (commond == "N" || commond == "n")
+            {
+                if (weekDay == 6)
+                    weekDay = 0 ;
+                else
+                    weekDay++;
+                
+                // if we are in 31th of march the next
+                // day will be 1st of april
+                if (monthDay == numberOfDays(year ,month))
+                    {
+                        monthDay = 1 ;
+                        month++ ;
+                    }
+                else
+                    monthDay++;
+
+                // if we are in 31th December 2021 
+                // next day will be 1st jan 2022
+                if (month == 11 && monthDay == 31)
+                {
+                    month = 0 ;
+                    year++ ; 
+                }
+
+                
+                startTheCalendar (year ,month ,monthDay ,weekDay)
+            }
+
+            //next month
+            if (commond == "NM" || commond == "nm")
+            
+
+        }
+    }
+
 
     void printDaysOfAMonth(int year, int month, int M1W)
     {
@@ -54,6 +116,7 @@ public:
         }
     }
 
+    // EX : march -> 31 days
     int numberOfDays(int year, int month)
     {
         switch (month)
@@ -97,6 +160,7 @@ public:
         cout << "  Su  Mo  Tu  We  Th  Fr  Sa" << endl;
     }
 
+    // the 0th month -> january , ...
     string monthDayName(int month)
     {
         switch (month)
@@ -128,10 +192,12 @@ public:
         }
     }
 
+    // today is 10th and saturday what day is 1st ?
     int findTheFirstDayOfMonth(int monthDay ,int weekDay)
     {
         return ((weekDay - ((monthDay - 1) % 7)) % 7);
     }
+
 };
 
 int main()
