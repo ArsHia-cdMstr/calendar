@@ -48,13 +48,13 @@ public:
         {
 
             // choose the day that we want to put a note
-            cout << "note day : " << monthDay;
+            cout << "\n\n  note day : " << monthDay;
 
             string commond;
             cout << "\n (N) for next day " << endl;
             cout << " (P) for the past day " << endl;
             cout << " (Q) to quit the program  " << endl;
-            cout << " (s) to see the note or edit it :" << endl ; 
+            cout << " (s) to see the note or edit it :" << endl;
 
             cin >> commond;
 
@@ -87,62 +87,66 @@ public:
                 else
                     monthDay++;
 
-                startTheCalendar(year, month, monthDay, weekDay)
+                startTheCalendar(year, month, monthDay, weekDay);
             }
 
             // past day
             else if (commond == "P" || commond == "p")
             {
                 // if we are in the saturday
-                // past day will be sunday  
+                // past day will be sunday
                 // which is the end of the week
-                if (weekday == 0)
-                    weekDay == 6 ;
+                if (weekDay == 0)
+                    weekDay == 6;
                 else
-                    weekDay-- ;
+                    weekDay--;
 
                 // if we are in 1st jan 2021
                 // the past day will be 31th Dec 2020
                 if (month == 1 && monthDay == 1)
                 {
-                    monthDay == 31 ;
-                    year-- ;
-                    month = 11 ;
+                    monthDay == 31;
+                    year--;
+                    month = 11;
                 }
 
-
-                // if we are in the april's 1st      
+                // if we are in the april's 1st
                 // past day will be 31th March
                 if (monthDay == 1)
                 {
                     month--;
-                    monthday = numberOfDays(year , (month - 1) );
-                }else{
-                    monthDay-- ;
+                    monthDay = numberOfDays(year, (month - 1));
+                }
+                else
+                {
+                    monthDay--;
                 }
 
-                startTheCalendar(year ,month ,monthDay ,weekDay);             
+                startTheCalendar(year, month, monthDay, weekDay);
             }
 
-            //quitting the program
+            // quitting the program
             else if (commond == "Q" || commond == "q")
             {
                 cout << " you quited the program :) " << endl;
                 exit(0);
             }
 
-            else if (commond == "S" || commond == "s")
-            {
-            
-            }
+            // else if (commond == "S" || commond == "s")
+            // {
+
+            // }
+
+            // if the input isn't a correct word
+            else
+                cout << "commond word is wrong pleas try again :) " << endl;
         }
-
     }
 
-    void showTheNote(int year ,int month ,int monthDay ,int weekDay)
-    {
-        
-    }
+    // void showTheNote(int year ,int month ,int monthDay ,int weekDay)
+    // {
+
+    // }
 
     void printDaysOfAMonth(int year, int month, int M1W)
     {
@@ -243,10 +247,16 @@ public:
     // today is 10th and saturday what day is 1st ?
     int findTheFirstDayOfMonth(int monthDay, int weekDay)
     {
-        return ((weekDay - ((monthDay - 1) % 7)) % 7);
+        // 0 <= weekDay <= 6
+        int m = ((weekDay -  ((monthDay - 1) % 7)  )   % 7) ;
+        if ( m < 0 )
+            return (m+7) ;
+        else
+            return m;
     }
 };
 
 int main()
 {
+    GeoCalendar g;
 }
