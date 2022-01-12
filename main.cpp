@@ -135,7 +135,7 @@ public:
 
             // start writing and reading the notes
             else if (commond == "S" || commond == "s")
-                showTheNote(year ,month ,monthDay ,weekDay);
+                showTheNote(year, month, monthDay, weekDay);
 
             // if the input isn't a correct word
             else
@@ -143,73 +143,81 @@ public:
         }
     }
 
-    void showTheNote(int year ,int month ,int monthDay, int weekDay)
+    void showTheNote(int year, int month, int monthDay, int weekDay)
     {
-        string fileName =   to_string(year) + "-" + to_string(month) + "-" + to_string(monthDay) ;
-        ofstream outF = (fileName + ".txt") ; 
-        ifstream inF = (fileName + ".txt") ;
-        string readNote;
-
-        // check if the day has a note 
-        // and then print it but if it don't
-        // just say that it doesn't have
-        if (inF)
+        while (true)
         {
-            while(inF)
+            string fileName = to_string(year) + "-" + to_string(month + 1) + "-" + to_string(monthDay) + ".txt";
+            ifstream inF(fileName);
+            string readNote;
+
+            // check if the day has a note
+            // and then print it but if it don't
+            // just say that it doesn't have
+            if (inF)
             {
-                getline(outF , readNote);
-                cout <<  readNote << endl ;
+                cout << "note :" << endl;
+                while (inF)
+                {
+                    getline(inF, readNote);
+                    cout << readNote << endl;
+                }
             }
-        }else{
-            cout << "this file doesn't have a note !" << endl ;
-            // if the file doesn't have a note then remove it 
-            remove (fileName) ;
-        }
-        inF.close();
-
-        // now you can delete all of note or to write
-        // a new one or to edit the last one
-
-        cout << "(D) for deleting the note file " << endl ;
-        cout << " (W) for writing a note " << endl ;
-        cout << " for ending the writing print (END) in the beginning of a line" << endl ;
-
-        string commond ;
-        cin >> commond ;
-
-        // writing a note
-        if ( commond == "w" || commond == "W") 
-        {
-            cout <<"write the note : " << endl ;
-            string WriteNote ;
-
-            // Execute a loop If file successfully Opened
-            while(outF)
-            {
-                getline(cin ,WriteNote);
-
-                // press END to exit 
-                if (WriteNote == "END")
-                    break;
-
-                outF << WriteNote << endl ;
-            }
-        }
-        outF.close();
-
-        // deleting the file
-        if (commond == "d" || commond == "D")
-        {
-            int status = remove(fileName);
-            if (status == 0)
-                cout << "file removed successfully !" << endl ; 
             else
-                cout << "file didn't exits !" << endl ;
+            {
+                cout << "this day doesn't have a note !" << endl;
+            }
+            inF.close();
+
+            // now you can delete all of note or to write
+            // a new one or to edit the last one
+
+            cout << " (D) for deleting the note file " << endl;
+            cout << " (W) for writing a note " << endl;
+            cout << " for ending the writing print (END) in the beginning of a line" << endl;
+            cout << " (Q) to quit the notepad  " << endl;
+
+            string commond;
+            cin >> commond;
+
+            // writing a note
+            if (commond == "w" || commond == "W")
+            {
+                ofstream outF(fileName);
+                cout << "write the note : " << endl;
+                string WriteNote;
+
+                // Execute a loop If file successfully Opened
+                while (outF)
+                {
+                    getline(cin, WriteNote);
+
+                    // press END to exit
+                    if (WriteNote == "END")
+                        break;
+
+                    outF << WriteNote << endl;
+                }
+
+                outF.close();
+            }
+
+            // deleting the file
+            if (commond == "d" || commond == "D")
+            {
+                int status = remove(fileName.c_str());
+                if (status == 0)
+                    cout << "file removed successfully !" << endl;
+                else
+                    cout << "file didn't exits !" << endl;
+            }
+
+            if (commond == "Q" || commond == "q")
+                break;
         }
 
         // when we're done writing and reading we go to the calendar again
-        startTheCalendar(year ,month ,monthDay ,weekDay) ;
-
+        startTheCalendar(year, month, monthDay, weekDay);
     }
 
     void printDaysOfAMonth(int year, int month, int M1W)
@@ -312,9 +320,9 @@ public:
     int findTheFirstDayOfMonth(int monthDay, int weekDay)
     {
         // 0 <= weekDay <= 6
-        int m = ((weekDay -  ((monthDay - 1) % 7)  )   % 7) ;
-        if ( m < 0 )
-            return (m+7) ;
+        int m = ((weekDay - ((monthDay - 1) % 7)) % 7);
+        if (m < 0)
+            return (m + 7);
         else
             return m;
     }
