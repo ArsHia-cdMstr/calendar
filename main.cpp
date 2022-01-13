@@ -227,17 +227,58 @@ public:
         int days = numberOfDays(year, month); // EX: March -> 31 days
         int k = M1W;                          // to know when to jump to the next line in printing calendar
 
+        int* redDays = notedDays(year, month);
+        int redInd = 0;
+
         for (int i = 1; i <= days; i++)
         {
-            printf("%4d", i);
-            if (k == 6)
+            // if the day has a note print it with red color
+            if (i == redDays[redInd])
             {
-                cout << "\n";
-                k = 0;
+                printf("\033[1;31m %4d \033[m", i);
+                if (k == 6)
+                {
+                    cout << "\n";
+                    k = 0;
+                }
+                else
+                    k++;
             }
             else
-                k++;
+            {
+                printf("%4d", i);
+                if (k == 6)
+                {
+                    cout << "\n";
+                    k = 0;
+                }
+                else
+                    k++;
+            }
         }
+        delete[] redDays;
+    }
+
+    // finds that what day has a note
+    int* notedDays(int year, int month)
+    {
+        int endOfMonth = numberOfDays(year ,month);
+        int *days = new int[31];
+        string fileName;
+        int k = 0;
+
+        for (int i = 1; i<endOfMonth ; i++)
+        {
+            fileName = to_string(year) + "-" + to_string(month+1) + "-" + to_string(i) + ".txt";
+            ifstream inF(fileName);
+            bool exists = inF.good();
+            if (exists)
+            {
+                days[k] = i;
+                k++;
+            }
+        }
+        return days;
     }
 
     // EX : march -> 31 days
