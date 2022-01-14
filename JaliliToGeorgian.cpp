@@ -7,6 +7,10 @@ License: GNU/LGPL _ Open Source & Free :: Version: 2.80 : [2020=1399]
 990=30*33 & 12053=(365*33)+(32/4) & 36524=(365*100)+(100/4)-(100/100)
 1461=(365*4)+(4/4) & 146097=(365*400)+(400/4)-(400/100)+(400/400)  */
 
+#include<iostream>
+
+using namespace std;
+
 long *gregorian_to_jalali(long gy, long gm, long gd, long out[]) {
   long days;
   {
@@ -63,13 +67,12 @@ long *jalali_to_gregorian(long jy, long jm, long jd, long out[]) {
 
 int main()
 {
-    // long a[3];
-    // cout << gregorian_to_jalali(2022 ,1 ,12 ,a)[0]<<endl ;//year
-    // cout << gregorian_to_jalali(2022 ,1 ,12 ,a)[1]<<endl ;//month
-    // cout << gregorian_to_jalali(2022 ,1 ,12 ,a)[2]<<endl ;//month day
-    // cout << gregorian_to_jalali(2022 ,1 ,12 ,a)[3]<<endl ;//weekday
-    // // cout << gregorian_to_jalali(2022 ,1 ,12 ,a)[4] ;
-
-    // ifstream infile("3-.cpp");
-    // cout << infile.good();
+    long a[4];
+    // cout << gregorian_to_jalali(2022 ,1 ,14 ,a)[0]<<endl ;//year
+    // cout << gregorian_to_jalali(2022 ,1 ,14 ,a)[1]<<endl ;//month
+    // cout << gregorian_to_jalali(2022 ,1 ,14 ,a)[2]<<endl ;//month day
+    gregorian_to_jalali(2022 ,1 ,14 ,a);
+    cout << a[0] ; // year
+    cout << a[1] ; // month
+    cout << a[2] ; // monthDay
 }
