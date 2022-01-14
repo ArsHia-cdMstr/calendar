@@ -20,6 +20,9 @@
 
 using namespace std;
 
+
+void choosTheCalendar();
+
 class GeoCalendar
 {
     // define the fields
@@ -73,6 +76,7 @@ private:
             cout << " (P) for the past day " << endl;
             cout << " (Q) to quit the program  " << endl;
             cout << " (s) to see the note or edit it :" << endl;
+            cout << " (b) to back to choosing the calenare type (perasian/georgian) :";
 
             cin >> commond;
 
@@ -116,7 +120,7 @@ private:
                 // past day will be sunday
                 // which is the end of the week
                 if (weekDay == 0)
-                    weekDay == 6;
+                    weekDay = 6;
                 else
                     weekDay--;
 
@@ -149,6 +153,13 @@ private:
             {
                 cout << " you quited the program :) " << endl;
                 exit(0);
+            }
+
+            else if ( commond == "b" || commond == "B")
+            {
+                // to clear the output befor the calendar
+                if (system("CLS")) system("clear");
+                choosTheCalendar();
             }
 
             // start writing and reading the notes
@@ -341,6 +352,9 @@ private:
 
     void printTheMonthTitle(int year, int month)
     {
+        // to clear the output befor the calendar
+         if (system("CLS")) system("clear");
+
         cout << "  --------------------------" << endl;
         cout << "       " << monthDayName(month) << "  ,  " << year << endl;
         cout << "  --------------------------" << endl;
@@ -458,6 +472,8 @@ private:
             cout << " (P) for the past day " << endl;
             cout << " (Q) to quit the program  " << endl;
             cout << " (s) to see the note or edit it :" << endl;
+            cout << " (b) to back to choosing the calenare type (perasian/georgian) :";
+
 
             cin >> commond;
 
@@ -501,7 +517,7 @@ private:
                 // past day will be sunday
                 // which is the end of the week
                 if (weekDay == 0)
-                    weekDay == 6;
+                    weekDay = 6;
                 else
                     weekDay--;
 
@@ -509,7 +525,7 @@ private:
                 // the past day will be 31th Dec 2020
                 if (month == 1 && monthDay == 1)
                 {
-                    monthDay == 31;
+                    monthDay == numberOfDays(year ,month);
                     year--;
                     month = 11;
                 }
@@ -527,6 +543,13 @@ private:
                 }
 
                 startTheCalendar(year, month, monthDay, weekDay);
+            }
+
+             else if ( commond == "b" || commond == "B")
+            {
+                // to clear the output befor the calendar
+                if (system("CLS")) system("clear");
+                choosTheCalendar();
             }
 
             // quitting the program
@@ -720,6 +743,9 @@ private:
     // jalili date has changes with gergian date in this func
     void printTheMonthTitle(int year, int month)
     {
+        // to clear the output befor the calendar
+         if (system("CLS")) system("clear");
+
         cout << "  --------------------------" << endl;
         cout << "       " << monthDayName(month) << "  ,  " << year << endl;
         cout << "  --------------------------" << endl;
@@ -804,10 +830,33 @@ private:
 };
 
 // which calendar do you want to use ??
-void choosTheCalendar(int year, int month, int monthDay, int weekDay)
+
+int main()
 {
+    // notes will be saved in this directory
+    mkdir("notes");
+
+    // to clear the terminal
+    if (system("CLS")) system("clear");
+
+    choosTheCalendar();
+}
+
+void choosTheCalendar()
+{
+    
+    // find the currunt time
+    time_t now = time(0);
+    tm *ltm = localtime(&now); // currunt time
+    int year = (ltm->tm_year + 1900);
+    int month = ltm->tm_mon;     //  0 <= month <= 11
+    int weekDay = ltm->tm_wday;  // 0 <= week day <= 6
+    int monthDay = ltm->tm_mday; // 1 <= month day <= 31 or 30 or ... based on the month
+
+
     while (true)
     {
+        cout << "choos the calendar type : " << endl;
         cout << "(P) for using the persian calendar " << endl;
         cout << "(G) for using the Georian calendar " << endl;
         string commond;
@@ -830,20 +879,4 @@ void choosTheCalendar(int year, int month, int monthDay, int weekDay)
             cout << "your input is wrong pleas try again :)" << endl;
         }
     }
-}
-
-int main()
-{
-    // notes will be saved in this directory
-    mkdir("notes");
-
-    // find the currunt time
-    time_t now = time(0);
-    tm *ltm = localtime(&now); // currunt time
-    int year = (ltm->tm_year + 1900);
-    int month = ltm->tm_mon;     //  0 <= month <= 11
-    int weekDay = ltm->tm_wday;  // 0 <= week day <= 6
-    int monthDay = ltm->tm_mday; // 1 <= month day <= 31 or 30 or ... based on the month
-
-    choosTheCalendar(year ,month ,monthDay ,weekDay);
 }
